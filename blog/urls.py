@@ -29,5 +29,6 @@ urlpatterns = [
     path('update',views.update_profile),
     path('blog',views.blog),
     path('save',views.save_blog),
+    path('search',views.search),
 
 ]

@@ -47,8 +47,8 @@ def home(request):
         username=request.session['id']
         if request.method =='GET':
             data=Register.objects.get(id=username)
-        data2 = Blog.objects.all()
-        return render(request, 'home.html', {'data': data, 'data2': data2})
+            data2 = Blog.objects.all()
+            return render(request, 'home.html', {'data': data, 'data2': data2})
     else:
         return redirect(display2)
 
@@ -103,4 +103,17 @@ def save_blog(request):
     else:
         return redirect(display2)
 
-
+def search(request):
+    if 'id' in request.session:
+        username=request.session['id']
+        data = None
+        search_data = None
+        if request.method == "GET":
+            search = request.GET.get('search')
+            if search:
+                search_data = Blog.objects.filter(title__icontains=search)
+            else:
+                data = Blog.objects.all()
+        return render(request, 'home.html', {'data2': data, 'blog': search_data,'data':username})
+    else:
+        return redirect(display2)
